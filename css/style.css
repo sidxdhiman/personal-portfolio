@@ -689,11 +689,15 @@ fieldset {
     color: #425BB5;
 }
 
-#profilepic{
-    margin-top: 150px;
-    margin-left: 500px;
-    border-radius: 50px;
+#profilepic {
+    display: block;
+    margin: 20vh auto 10vh auto;
+    border-radius: 50px;             
+    width: 20vw;                    
+    max-width: 400px;               
+    height: auto;                   
 }
+
 .resumediv{ 
     margin-top: 25px;
     width: 140px;
