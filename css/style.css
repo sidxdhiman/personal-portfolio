@@ -389,6 +389,13 @@ a.active {
     padding: 100px 0;
 
 }
+.portfolio_item img {
+  width: 300%;         
+  height: 200px;     
+  object-fit: cover; 
+  border-radius: 0px; 
+  align-items:self-start;
+}
 
 .portfolio .categories-grid span {
     font-size: 30px;
