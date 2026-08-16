@@ -113,6 +113,22 @@ $(document).ready(function () {
     // Scroll-reveal animations
     initReveal();
 
+    // Back to top
+    var toTop = $('#toTop');
+    function toggleToTop() {
+      if ($(window).scrollTop() > $(window).height() * .8) {
+        toTop.addClass('show');
+      } else {
+        toTop.removeClass('show');
+      }
+    }
+    toggleToTop();
+    $(window).on('scroll', toggleToTop);
+    toTop.on('click', function () {
+      $('html, body').animate({ scrollTop: 0 }, 600);
+      return false;
+    });
+
     // scroll menu
     var sections = $('.section'),
         nav = $('.navbar-fixed-top,footer'),

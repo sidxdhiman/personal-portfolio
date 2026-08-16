@@ -54,6 +54,20 @@
 
     <!-- ================= HERO ================= -->
     <div class="section" id="home">
+      <video
+        id="home-video"
+        class="home-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="img/background_home.jpg"
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        <source src="video/hero-bg.mp4" type="video/mp4" />
+      </video>
       <div class="container hero-container">
         <div class="hero-grid">
           <div class="hero-copy" data-reveal="fade-up">
@@ -236,10 +250,6 @@
         <div class="section-head" data-reveal="fade-up">
           <h4>03</h4>
           <h1 class="size-50">Projects</h1>
-          <p class="section-intro">
-            Concise overviews - detailed architecture, setup and documentation live in each
-            repository.
-          </p>
           <div class="h-50"></div>
         </div>
         <div class="projects-grid" id="projects-grid"></div>
@@ -271,18 +281,18 @@
           <div class="h-50"></div>
         </div>
         <ul class="recognition-list">
-          <li data-reveal="fade-up"><strong>Best Newcomer</strong> - Q2</li>
+          <li data-reveal="fade-up"><strong>Xebia - Best Newcomer</strong> - Q2</li>
           <li data-reveal="fade-up" style="--reveal-delay: 80ms">
-            <strong>Best Team</strong> - Q2, Airtel Payments Bank team
+            <strong>Xebia - Best Team</strong> - Q2, Airtel Payments Bank team
           </li>
           <li data-reveal="fade-up" style="--reveal-delay: 160ms">
-            <strong>Dean's List</strong> - KR Mangalam University, multiple times
+            <strong>KR Mangalam University - Dean's List</strong> - multiple times
           </li>
           <li data-reveal="fade-up" style="--reveal-delay: 240ms">
-            <strong>3rd Prize</strong> - Best Project of the Year 2025, Snipster
+            <strong>KR Mangalam University - Best Project of the Year 2025 - 3rd Prize</strong> - Snipster
           </li>
           <li data-reveal="fade-up" style="--reveal-delay: 320ms">
-            <strong>GCP Skill Badges</strong> - Generative AI and Cloud
+            <strong>Google Cloud - GCP Skill Badges</strong> - Generative AI and Cloud
           </li>
         </ul>
       </div>
@@ -456,6 +466,10 @@
         </div>
       </div>
     </div>
+
+    <a href="#home" class="to-top" id="toTop" aria-label="Back to top">
+      <i class="ion-chevron-up"></i>
+    </a>
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
