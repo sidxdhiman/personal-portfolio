@@ -8,7 +8,7 @@
       name="description"
       content="Sidharth Dhiman - Full-stack engineer focused on building products, automating complex workflows, and turning ambiguous requirements into practical software."
     />
-    <title>Sidharth Dhiman - FDE / Full-Stack &amp; Automation</title>
+    <title>Sidharth Dhiman - Forward Deployment Engineer / Full-Stack &amp; Automation</title>
     <link rel="icon" href="img/icons/title_icon.png" type="image/x-icon" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="ionicons/css/ionicons.min.css" rel="stylesheet" />
@@ -72,7 +72,7 @@
         <div class="hero-grid">
           <div class="hero-copy" data-reveal="fade-up">
             <h4 class="hero-eyebrow">Sidharth Dhiman</h4>
-            <h1 class="hero-title">FDE / Full-Stack &amp; Automation</h1>
+            <h1 class="hero-title">Forward Deployment Engineer / Full-Stack &amp; Automation</h1>
             <p class="hero-tagline">
               Full-stack engineer focused on building products, automating complex workflows, and
               turning ambiguous requirements into practical software.
@@ -377,91 +377,46 @@
               method="post"
               novalidate="novalidate"
             >
+              <label class="sr-only" for="contact-name">Your Name</label>
               <input
                 type="text"
                 name="name"
+                id="contact-name"
                 class="form-control"
                 placeholder="Your Name"
-                aria-label="Your Name"
+                autocomplete="name"
               />
+              <label class="sr-only" for="contact-email">Your E-mail</label>
               <input
                 type="email"
                 name="email"
+                id="contact-email"
                 class="form-control"
                 placeholder="Your E-mail"
-                aria-label="Your E-mail"
+                autocomplete="email"
               />
-              <input
-                type="text"
-                name="phone"
-                class="form-control"
-                placeholder="Phone Number"
-                aria-label="Phone Number"
-              />
+              <label class="sr-only" for="contact-message">Your Message</label>
               <textarea
                 name="message"
+                id="contact-message"
                 class="form-control"
                 placeholder="Your Message"
                 style="height: 120px"
-                aria-label="Your Message"
               ></textarea>
-              <button id="submit" type="submit" name="submit" class="btn btn-glance">
-                Send
-              </button>
-              <div id="success">
-                <p class="green textcenter">
-                  Your message was sent successfully! Will get back to you as soon as I can.
-                </p>
+              <div class="hp-wrap" aria-hidden="true">
+                <label for="contact-website">Leave this field empty</label>
+                <input type="text" name="website" id="contact-website" tabindex="-1" autocomplete="off" />
               </div>
-              <div id="error">
-                <p>Oops! Something did not work, please try again</p>
+              <button id="submit" type="submit" name="submit" class="btn btn-glance">
+                Let&rsquo;s talk &rarr;
+              </button>
+              <div id="success" role="status">
+                <p>Message sent - I'll get back to you.</p>
+              </div>
+              <div id="error" role="alert">
+                <p>Something went wrong. Please try again or email me directly.</p>
               </div>
             </form>
-
-            <script>
-              const form = document.getElementById("contact-form");
-              form.addEventListener("submit", formSubmit);
-
-              function formSubmit(e) {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-
-                const name = formData.get("name");
-                const email = formData.get("email");
-                const message = formData.get("message");
-
-                if (!name || !email || !message) {
-                  alert("Please fill in all the required fields (name, email, and message).");
-                  return;
-                }
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test(email)) {
-                  alert("Please enter a valid email address.");
-                  return;
-                }
-
-                fetch("https://getform.io/f/bkkkoqlb", {
-                  method: "POST",
-                  body: formData,
-                  headers: {
-                    Accept: "application/json",
-                  },
-                })
-                  .then(function (response) {
-                    $("#contact :input").attr("disabled", "disabled");
-                    $("#contact").fadeTo("slow", 1, function () {
-                      $(this).find(":input").attr("disabled", "disabled");
-                      $(this).find("label").css("cursor", "default");
-                      $("#success").fadeIn();
-                    });
-                  })
-                  .catch(function (error) {
-                    $("#contact").fadeTo("slow", 1, function () {
-                      $("#error").fadeIn();
-                    });
-                  });
-              }
-            </script>
           </div>
         </div>
       </div>

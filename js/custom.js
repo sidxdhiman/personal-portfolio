@@ -62,7 +62,11 @@ function renderSkills(groups) {
     var html = groups.map(function (g, i) {
         var delay = i * 90;
         var chips = g.items.map(function (item) {
-            return '<span class="skill-chip">' + item + '</span>';
+            var slug = window.PORTFOLIO.skillLogos ? window.PORTFOLIO.skillLogos[item] : null;
+            var logo = slug
+                ? '<img class="skill-logo" src="img/skills/' + slug + '.svg" alt="" aria-hidden="true" />'
+                : '';
+            return '<span class="skill-chip">' + logo + '<span class="skill-chip-name">' + item + '</span></span>';
         }).join('');
         return '' +
             '<div class="skill-group" data-reveal="fade-up" style="--reveal-delay: ' + delay + 'ms">' +
@@ -176,36 +180,87 @@ $(document).ready(function () {
         }
     });
 
-    // Contact form validation
-    $(function () {
-        $('#contact-form').validate({
-            rules: {
-                name: {
-                    required: true,
-                    minlength: 2
-                },
-                email: {
-                    required: true
-                },
-                phone: {
-                    required: false
-                },
-                message: {
-                    required: true
-                }
-            },
-            messages: {
-                name: {
-                    required: "This field is required",
-                    minlength: "your name must consist of at least 2 characters"
-                },
-                email: {
-                    required: "This field is required"
-                },
-                message: {
-                    required: "This field is required"
-                }
-            }
+    // Contact form -> Netlify function -> Telegram
+    var contactForm = $('#contact-form');
+    var contactSubmit = $('#submit', contactForm);
+
+    function setContactState(state) {
+        if (state === 'sending') {
+            contactSubmit.prop('disabled', true).text('Sending...');
+            $('#error', contactForm).hide();
+            $('#success', contactForm).hide();
+        } else {
+            contactSubmit.prop('disabled', false).text('Let\u2019s talk \u2192');
+        }
+    }
+
+    function submitContact(form) {
+        // Honeypot anti-spam: bots fill the hidden field; silently accept and stop.
+        var hp = $(form).find('[name="website"]').val();
+        if (hp && hp.trim().length > 0) {
+            setContactState('idle');
+            $(form)[0].reset();
+            $('#success', contactForm).fadeIn();
+            return;
+        }
+
+        setContactState('sending');
+
+        $.ajax({
+            url: '/api/contact',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({
+                name: $(form).find('[name="name"]').val().trim(),
+                email: $(form).find('[name="email"]').val().trim(),
+                message: $(form).find('[name="message"]').val().trim()
+            })
+        }).done(function () {
+            setContactState('idle');
+            $(form)[0].reset();
+            $('#success', contactForm).fadeIn();
+        }).fail(function () {
+            setContactState('idle');
+            $('#error', contactForm).fadeIn();
         });
+    }
+
+    contactForm.validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 2,
+                maxlength: 100
+            },
+            email: {
+                required: true,
+                email: true,
+                maxlength: 150
+            },
+            message: {
+                required: true,
+                maxlength: 2000
+            }
+        },
+        messages: {
+            name: {
+                required: "Please enter your name.",
+                minlength: "Your name must be at least 2 characters.",
+                maxlength: "Your name must be 100 characters or fewer."
+            },
+            email: {
+                required: "Please enter your email.",
+                email: "Please enter a valid email address.",
+                maxlength: "Email must be 150 characters or fewer."
+            },
+            message: {
+                required: "Please enter a message.",
+                maxlength: "Your message must be 2000 characters or fewer."
+            }
+        },
+        submitHandler: function (form) {
+            submitContact(form);
+        }
     });
 });

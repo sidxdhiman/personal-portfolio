@@ -1,0 +1,18 @@
+# Netlify config for the static portfolio
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+
+# Expose the contact function at a clean /api/contact path.
+# status = 200 proxies the request (method + body) to the function.
+[[redirects]]
+  from = "/api/contact"
+  to = "/.netlify/functions/contact"
+  status = 200
+  # Lightweight anti-spam: 20 POSTs per minute per IP to the contact endpoint.
+  [redirects.rate_limit]
+  window_limit = 20
+  window_size = 60
+  aggregate_by = ["ip", "domain"]

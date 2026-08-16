@@ -67,5 +67,29 @@ window.PORTFOLIO = {
     },
     { group: "Mobile", items: ["Android", "Kotlin", "React Native"] },
     { group: "Tools", items: ["Git", "GitHub", "Docker", "Power BI", "Excel"] }
-  ]
+  ],
+
+  skillLogos: {
+    "Python": "python",
+    "JavaScript": "javascript",
+    "TypeScript": "typescript",
+    "Java": "openjdk",
+    "Kotlin": "kotlin",
+    "React": "react",
+    "React Native": "react",
+    "Tailwind CSS": "tailwindcss",
+    "Node.js": "nodedotjs",
+    "Express": "express",
+    "FastAPI": "fastapi",
+    "MongoDB": "mongodb",
+    "PostgreSQL": "postgresql",
+    "Ollama": "ollama",
+    "n8n": "n8n",
+    "Android": "android",
+    "Git": "git",
+    "GitHub": "github",
+    "Docker": "docker",
+    "Power BI": "powerbi",
+    "Excel": "microsoftexcel"
+  }
 };
