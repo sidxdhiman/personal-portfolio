@@ -17,11 +17,12 @@ function renderProjects(projects) {
     var grid = document.getElementById('projects-grid');
     if (!grid || !projects) return;
 
-    var cards = projects.map(function (p) {
+    var cards = projects.map(function (p, i) {
         var statusClass = (p.status || '').toLowerCase().indexOf('academic') !== -1
             ? 'status-academic'
             : 'status-in-development';
 
+        var delay = i * 120;
         var highlight = p.highlight
             ? '<p class="project-highlight">' + p.highlight + '</p>'
             : '';
@@ -39,7 +40,7 @@ function renderProjects(projects) {
             : '';
 
         return '' +
-            '<article class="project-card">' +
+            '<article class="project-card" data-reveal="fade-up" style="--reveal-delay: ' + delay + 'ms">' +
                 '<div class="project-head">' +
                     '<h3 class="project-name">' + p.name + '</h3>' +
                     '<span class="status-badge ' + statusClass + '">' + p.status + '</span>' +
@@ -58,18 +59,46 @@ function renderSkills(groups) {
     var container = document.getElementById('skills-grid');
     if (!container || !groups) return;
 
-    var html = groups.map(function (g) {
+    var html = groups.map(function (g, i) {
+        var delay = i * 90;
         var chips = g.items.map(function (item) {
             return '<span class="skill-chip">' + item + '</span>';
         }).join('');
         return '' +
-            '<div class="skill-group">' +
+            '<div class="skill-group" data-reveal="fade-up" style="--reveal-delay: ' + delay + 'ms">' +
                 '<h3>' + g.group + '</h3>' +
                 '<div class="skill-items">' + chips + '</div>' +
             '</div>';
     });
 
     container.innerHTML = html.join('');
+}
+
+// ------------------------------------------------------------
+// Reveal-on-scroll animations
+// ------------------------------------------------------------
+function initReveal() {
+    var els = document.querySelectorAll('[data-reveal]');
+    if (!els.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('is-revealed'); });
+        return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                io.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -48px 0px'
+    });
+
+    els.forEach(function (el) { io.observe(el); });
 }
 
 $(document).ready(function () {
@@ -80,6 +109,9 @@ $(document).ready(function () {
         renderProjects(window.PORTFOLIO.projects);
         renderSkills(window.PORTFOLIO.skills);
     }
+
+    // Scroll-reveal animations
+    initReveal();
 
     // scroll menu
     var sections = $('.section'),
@@ -126,22 +158,6 @@ $(document).ready(function () {
         } else {
             $(".navbar-fixed-top").removeClass("bg-nav");
         }
-    });
-
-    // Parallax
-    var parallax = function () {
-        $(window).stellar();
-    };
-
-    $(function () {
-        parallax();
-    });
-
-    // AOS
-    AOS.init({
-        duration: 900,
-        once: true,
-        disable: 'mobile'
     });
 
     // Contact form validation

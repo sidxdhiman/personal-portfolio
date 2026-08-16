@@ -1,6 +1,6 @@
 /**
  * Centralized portfolio content.
- * Projects and skills render from this file — edit data here, not the HTML.
+ * Projects and skills render from this file - edit data here, not the HTML.
  */
 
 window.PORTFOLIO = {
@@ -47,7 +47,7 @@ window.PORTFOLIO = {
     {
       name: "Snipster",
       status: "Academic Project",
-      highlight: "Best Project of the Year 2025 — 3rd Prize",
+      highlight: "Best Project of the Year 2025 - 3rd Prize",
       description:
         "A collaborative Q&A platform for universities and colleges, letting students ask and answer technical questions within shared communities such as coding groups, course sections, classes or entire batches.",
       tags: ["JavaScript", "React", "Node.js", "Express", "MongoDB", "MERN Stack"],
