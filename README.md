@@ -1,50 +1,39 @@
-This is my personal portfolio website built using React, showcasing my skills, projects, and experience in web development. It's designed to be fast, responsive, and easily customizable.
+# Sidharth Dhiman — Portfolio
 
-🚀 Tech Stack
-  
-    Frontend: React, Tailwind CSS
-  
-    Routing: React Router
-  
-    Animations: Framer Motion
-  
-    Deployment: Netlify
+Personal portfolio site for **Sidharth Dhiman** (FDE / Full-Stack & Automation).
 
-🔧 Features
+## Tech Stack
 
-    Clean and modern UI
-  
-    Fully responsive design
-  
-    Dynamic project and skills sections
-  
-    Smooth animations
-  
-    Easy to update content
+- Static HTML / CSS / JavaScript (no build step)
+- Bootstrap 3 (CSS framework + grid)
+- jQuery + AOS (scroll animations) + Stellar (parallax)
+- Content rendered from a single data file: `js/data.js`
 
-🛠️ Setup & Installation
+## Structure
 
-Clone the repo
+- `index.html` — page structure (hero, about, experience, projects, skills, recognition, education, contact)
+- `css/style.css` — site styles
+- `js/data.js` — **centralized content**: projects (name, status, description, tags, GitHub links), skills
+- `js/custom.js` — rendering + scroll behavior
 
-    git clone https://github.com/sidxdhiman/personal-portfolio.git
-    cd personal-portfolio
+## Editing Content
 
-Install dependencies
+Everything data-driven lives in `js/data.js`:
 
-    npm install
+- **Projects** — edit the `projects` array. GitHub URLs live here.
+- **Skills** — edit the `skills` array.
+- **Resume link** — the hero "Resume" button points to the resume PDF in the repo root; update the `href` in `index.html` when a new resume is ready.
 
-Start the dev server
+## Run locally
 
-    npm run dev
+Serve the folder with any static server, e.g.:
 
-Build for production
+```bash
+python3 -m http.server 8080
+```
 
-    npm run build
+Then open http://localhost:8080.
 
-📦 Deployment
+## Deployment
 
-You can deploy this project on Netlify or Vercel or Github pages(as you like)
-
-<b>Created By Sidharth Dhiman</b>
-
-
+Deployable as a static site on Netlify, Vercel, GitHub Pages, or any static host.

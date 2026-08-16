@@ -10,8 +10,76 @@ $(window).load(function () {
     });
 })
 
+// ------------------------------------------------------------
+// Render projects & skills from the centralized data (js/data.js)
+// ------------------------------------------------------------
+function renderProjects(projects) {
+    var grid = document.getElementById('projects-grid');
+    if (!grid || !projects) return;
+
+    var cards = projects.map(function (p) {
+        var statusClass = (p.status || '').toLowerCase().indexOf('academic') !== -1
+            ? 'status-academic'
+            : 'status-in-development';
+
+        var highlight = p.highlight
+            ? '<p class="project-highlight">' + p.highlight + '</p>'
+            : '';
+
+        var tags = (p.tags || []).map(function (t) {
+            return '<span>' + t + '</span>';
+        }).join('');
+
+        var github = p.githubUrl
+            ? '<a class="project-link" href="' + p.githubUrl + '" target="_blank" rel="noopener">View GitHub <span aria-hidden="true">&rarr;</span></a>'
+            : '';
+
+        var demo = p.demoUrl
+            ? '<a class="project-link" href="' + p.demoUrl + '" target="_blank" rel="noopener">Live Demo <span aria-hidden="true">&rarr;</span></a>'
+            : '';
+
+        return '' +
+            '<article class="project-card">' +
+                '<div class="project-head">' +
+                    '<h3 class="project-name">' + p.name + '</h3>' +
+                    '<span class="status-badge ' + statusClass + '">' + p.status + '</span>' +
+                '</div>' +
+                '<p class="project-desc">' + p.description + '</p>' +
+                highlight +
+                '<div class="project-tags">' + tags + '</div>' +
+                '<div class="project-links">' + github + demo + '</div>' +
+            '</article>';
+    });
+
+    grid.innerHTML = cards.join('');
+}
+
+function renderSkills(groups) {
+    var container = document.getElementById('skills-grid');
+    if (!container || !groups) return;
+
+    var html = groups.map(function (g) {
+        var chips = g.items.map(function (item) {
+            return '<span class="skill-chip">' + item + '</span>';
+        }).join('');
+        return '' +
+            '<div class="skill-group">' +
+                '<h3>' + g.group + '</h3>' +
+                '<div class="skill-items">' + chips + '</div>' +
+            '</div>';
+    });
+
+    container.innerHTML = html.join('');
+}
+
 $(document).ready(function () {
     "use strict";
+
+    // Render data-driven sections
+    if (window.PORTFOLIO) {
+        renderProjects(window.PORTFOLIO.projects);
+        renderSkills(window.PORTFOLIO.skills);
+    }
 
     // scroll menu
     var sections = $('.section'),
@@ -46,7 +114,6 @@ $(document).ready(function () {
         return false;
     });
 
-
     // Menu opacity
     if ($(window).scrollTop() > 80) {
         $(".navbar-fixed-top").addClass("bg-nav");
@@ -61,8 +128,6 @@ $(document).ready(function () {
         }
     });
 
-
-
     // Parallax
     var parallax = function () {
         $(window).stellar();
@@ -74,42 +139,12 @@ $(document).ready(function () {
 
     // AOS
     AOS.init({
-        duration: 1200,
+        duration: 900,
         once: true,
         disable: 'mobile'
     });
 
-    //  isotope
-    $('#projects').waitForImages(function () {
-        var $container = $('.portfolio_container');
-        $container.isotope({
-            filter: '*',
-        });
-
-        $('.portfolio_filter a').click(function () {
-            $('.portfolio_filter .active').removeClass('active');
-            $(this).addClass('active');
-
-            var selector = $(this).attr('data-filter');
-            $container.isotope({
-                filter: selector,
-                animationOptions: {
-                    duration: 500,
-                    animationEngine: "jquery"
-                }
-            });
-            return false;
-        });
-
-    });
-
-    //animatedModal
-    // $("#demo01,#demo02,#demo03,#demo04,#demo05,#demo06,#demo07,#demo08,#demo09").animatedModal();
-    // $("#demo01").animatedModal1();
-    
-    // Contact Form 	
-
-    // validate contact form
+    // Contact form validation
     $(function () {
         $('#contact-form').validate({
             rules: {
@@ -126,7 +161,6 @@ $(document).ready(function () {
                 message: {
                     required: true
                 }
-
             },
             messages: {
                 name: {
@@ -139,32 +173,7 @@ $(document).ready(function () {
                 message: {
                     required: "This field is required"
                 }
-            },
+            }
         });
-
     });
 });
-
-
-// Contact Form
-
-// submitHandler: function (form) {
-//     $(form).ajaxSubmit({
-//         type: "POST",
-//         data: $(form).serialize(),
-//         url: "process.php",
-//         success: function () {
-//             $('#contact :input').attr('disabled', 'disabled');
-//             $('#contact').fadeTo("slow", 1, function () {
-//                 $(this).find(':input').attr('disabled', 'disabled');
-//                 $(this).find('label').css('cursor', 'default');
-//                 $('#success').fadeIn();
-//             });
-//         },
-//         error: function () {
-//             $('#contact').fadeTo("slow", 1, function () {
-//                 $('#error').fadeIn();
-//             });
-//         }
-//     });
-// }
