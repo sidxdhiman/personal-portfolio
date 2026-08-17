@@ -200,6 +200,10 @@ nav li a.active {
   color: var(--brand);
 }
 
+.nav-toggle {
+  display: none;
+}
+
 .bg-nav {
   background: #fff;
   border-bottom: 1px solid var(--line);
@@ -1081,6 +1085,79 @@ textarea {
   .skills-grid {
     grid-template-columns: 1fr;
   }
+
+  header {
+    height: 60px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-toggle {
+    display: inline-block;
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 34px;
+    height: 34px;
+    padding: 6px 5px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    z-index: 110;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 4px auto;
+    background: #444;
+    -webkit-transition: all .3s var(--reveal-ease);
+    transition: all .3s var(--reveal-ease);
+  }
+
+  .nav-open .nav-toggle span:nth-child(1) {
+    -webkit-transform: translateY(6px) rotate(45deg);
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .nav-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-open .nav-toggle span:nth-child(3) {
+    -webkit-transform: translateY(-6px) rotate(-45deg);
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  nav ul {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    -webkit-transition: max-height .4s var(--reveal-ease);
+    transition: max-height .4s var(--reveal-ease);
+  }
+
+  .nav-open nav ul {
+    max-height: 480px;
+    padding: 10px 0 16px;
+    border-top: 1px solid var(--line);
+  }
+
+  nav li {
+    display: block;
+    margin: 0;
+  }
+
+  nav li a {
+    display: block;
+    padding: 11px 16px;
+  }
 }
 
 @media (max-width: 500px) {
@@ -1105,16 +1182,6 @@ textarea {
 }
 
 @media (max-width: 431px) {
-  nav li {
-    margin: 6px;
-  }
-  nav li a {
-    font-size: 10px;
-    letter-spacing: 1px;
-  }
-  nav ul {
-    padding: 18px 0;
-  }
   .project-head {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;

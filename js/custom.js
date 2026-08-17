@@ -135,11 +135,15 @@ $(document).ready(function () {
 
     // scroll menu
     var sections = $('.section'),
-        nav = $('.navbar-fixed-top,footer'),
-        nav_height = nav.outerHeight();
+        nav = $('.navbar-fixed-top,footer');
+
+    function navHeight() {
+        return $('.navbar-fixed-top').outerHeight();
+    }
 
     $(window).on('scroll', function () {
-        var cur_pos = $(this).scrollTop();
+        var cur_pos = $(this).scrollTop(),
+            nav_height = navHeight();
 
         sections.each(function () {
             var top = $(this).offset().top - nav_height,
@@ -160,10 +164,25 @@ $(document).ready(function () {
             id = $el.attr('href');
 
         $('html, body').animate({
-            scrollTop: $(id).offset().top - nav_height + 2
+            scrollTop: $(id).offset().top - navHeight() + 2
         }, 600);
 
         return false;
+    });
+
+    // Mobile menu toggle
+    var navToggle = $('.nav-toggle'),
+        headerNav = $('.navbar-fixed-top');
+
+    navToggle.on('click', function () {
+        var isOpen = headerNav.hasClass('nav-open');
+        headerNav.toggleClass('nav-open', !isOpen);
+        navToggle.attr('aria-expanded', String(!isOpen));
+    });
+
+    headerNav.find('a').on('click', function () {
+        headerNav.removeClass('nav-open');
+        navToggle.attr('aria-expanded', 'false');
     });
 
     // Menu opacity
